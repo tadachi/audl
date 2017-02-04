@@ -1,5 +1,10 @@
 "use strict";
 var ytdl = require("ytdl-core");
+var bunyan = require("bunyan");
+var log = bunyan.createLogger({
+    name: 'audl',
+    level: 0
+});
 /*
  * 02/01/2017
  *
@@ -24,10 +29,9 @@ var file = 'data.json';
 ytdl.getInfo('https://www.youtube.com/watch?v=1gdpyzwOOYY', function (err, info) {
     // let audio_file = new YTAudioFileFormat(findITAG('249', info['formats']));
     var audio_file_meta = new YTAudioFileMeta(info);
-    console.log(audio_file_meta);
-    jsonfile.writeFile(file, audio_file_meta, function (err) {
+    jsonfile.writeFileSync(file, audio_file_meta, function (err) {
         if (err)
-            return console.log(err);
+            log.info(err);
     });
 });
 var findITAG = function (itag_to_search, formats) {
@@ -51,15 +55,15 @@ var YTAudioFileFormat = (function () {
 }());
 var YTAudioFileMeta = (function () {
     function YTAudioFileMeta(data) {
-        this.formats = new Map();
         this.title = data.title;
         this.author = data.author;
         this.length_seconds = Number(data.length_seconds);
         this.description = data.description;
         this.view_count = Number(data.view_count);
+        this.formats = {};
         for (var _i = 0, _a = data.formats; _i < _a.length; _i++) {
             var format = _a[_i];
-            this.formats.set(format.itag, format);
+            this.formats[format.itag] = format;
         }
     }
     return YTAudioFileMeta;

@@ -1,4 +1,11 @@
 import ytdl = require('ytdl-core');
+import bunyan = require('bunyan');
+
+var log = bunyan.createLogger({
+    name: 'audl',
+    level: 0
+
+});
 
 /*
  * 02/01/2017
@@ -28,10 +35,10 @@ let file: string = 'data.json';
 ytdl.getInfo('https://www.youtube.com/watch?v=1gdpyzwOOYY', function (err, info) {
     // let audio_file = new YTAudioFileFormat(findITAG('249', info['formats']));
     let audio_file_meta = new YTAudioFileMeta(info);
-    console.log(audio_file_meta);
-    
-    jsonfile.writeFile(file, audio_file_meta, function (err) {
-        if (err) return console.log(err);
+
+    jsonfile.writeFileSync(file, audio_file_meta, function (err) {
+        if (err) 
+            log.info(err);
     })
 })
 
@@ -60,7 +67,7 @@ interface AudioFileMetaInterface {
     length_seconds: number;
     description: string;
     view_count: number;
-    formats: Map<number, YTAudioFileFormat>;
+    formats: any;
 }
 
 class YTAudioFileFormat implements AudioFileFormatsInterface {
@@ -85,7 +92,7 @@ class YTAudioFileMeta implements AudioFileMetaInterface {
     length_seconds: number;
     description: string;
     view_count: number;
-    formats: Map<number, YTAudioFileFormat> = new Map<number, YTAudioFileFormat>();
+    formats: any;
 
     constructor(data: any) {
         this.title = data.title;
@@ -93,8 +100,9 @@ class YTAudioFileMeta implements AudioFileMetaInterface {
         this.length_seconds = Number(data.length_seconds);
         this.description = data.description;
         this.view_count = Number(data.view_count);
+        this.formats = {};
         for (let format of data.formats) {
-            this.formats.set(format.itag, format);
+            this.formats[format.itag] = format;
         }
     }
 }
