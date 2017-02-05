@@ -3,6 +3,9 @@ import bunyan = require('bunyan');
 
 var log = bunyan.createLogger({
     name: 'audl',
+    streams: [{
+        path: './audl.log',
+    }],
     level: 0
 
 });
@@ -39,7 +42,10 @@ ytdl.getInfo('https://www.youtube.com/watch?v=1gdpyzwOOYY', function (err, info)
     jsonfile.writeFileSync(file, audio_file_meta, function (err) {
         if (err) 
             log.info(err);
-    })
+
+        log.info('Successfully wrote to ' + file);
+    }(log))
+
 })
 
 let findITAG = function (itag_to_search: string, formats): Object {

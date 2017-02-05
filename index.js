@@ -3,6 +3,9 @@ var ytdl = require("ytdl-core");
 var bunyan = require("bunyan");
 var log = bunyan.createLogger({
     name: 'audl',
+    streams: [{
+            path: './audl.log'
+        }],
     level: 0
 });
 /*
@@ -32,7 +35,8 @@ ytdl.getInfo('https://www.youtube.com/watch?v=1gdpyzwOOYY', function (err, info)
     jsonfile.writeFileSync(file, audio_file_meta, function (err) {
         if (err)
             log.info(err);
-    });
+        log.info('Successfully wrote to ' + file);
+    }(log));
 });
 var findITAG = function (itag_to_search, formats) {
     for (var _i = 0, formats_1 = formats; _i < formats_1.length; _i++) {
