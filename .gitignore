@@ -1,3 +1,4 @@
 node_modules/
 .idea/
-audl.log
+log.json
+data.json

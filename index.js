@@ -4,8 +4,9 @@ var bunyan = require("bunyan");
 var log = bunyan.createLogger({
     name: 'audl',
     streams: [{
-            path: './audl.log'
+            path: './log.json'
         }],
+    src: false,
     level: 0
 });
 /*
@@ -30,7 +31,6 @@ var file = 'data.json';
 // ytdl('https://www.youtube.com/watch?v=1gdpyzwOOYY', { quality: '140' })
 //   .pipe(fs.createWriteStream('itag_140.m4a'));
 ytdl.getInfo('https://www.youtube.com/watch?v=1gdpyzwOOYY', function (err, info) {
-    // let audio_file = new YTAudioFileFormat(findITAG('249', info['formats']));
     var audio_file_meta = new YTAudioFileMeta(info);
     jsonfile.writeFileSync(file, audio_file_meta, function (err) {
         if (err)

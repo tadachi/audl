@@ -4,8 +4,9 @@ import bunyan = require('bunyan');
 var log = bunyan.createLogger({
     name: 'audl',
     streams: [{
-        path: './audl.log',
+        path: './log.json',
     }],
+    src: false,
     level: 0
 
 });
@@ -36,7 +37,6 @@ let file: string = 'data.json';
 //   .pipe(fs.createWriteStream('itag_140.m4a'));
 
 ytdl.getInfo('https://www.youtube.com/watch?v=1gdpyzwOOYY', function (err, info) {
-    // let audio_file = new YTAudioFileFormat(findITAG('249', info['formats']));
     let audio_file_meta = new YTAudioFileMeta(info);
 
     jsonfile.writeFileSync(file, audio_file_meta, function (err) {
@@ -44,7 +44,7 @@ ytdl.getInfo('https://www.youtube.com/watch?v=1gdpyzwOOYY', function (err, info)
             log.info(err);
 
         log.info('Successfully wrote to ' + file);
-    }(log))
+    }(log));
 
 })
 
