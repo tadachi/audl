@@ -11,9 +11,16 @@
   "license": "ISC",
   "dependencies": {
     "bunyan": "^1.8.5",
+    "commander": "^2.9.0",
+    "https": "^1.0.0",
     "jsonfile": "^2.4.0",
+    "progress": "^1.1.8",
     "prompt": "^1.0.0",
     "request": "^2.79.0",
     "ytdl-core": "^0.7.24"
+  },
+  "devDependencies": {
+    "@types/node": "^7.0.5",
+    "fs": "0.0.1-security"
   }
 }
