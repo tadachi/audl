@@ -40,23 +40,17 @@ function main() {
     ytdl.getInfo('https://www.youtube.com/watch?v=RyoMQg3d5cs', function (err, info) {
         let audio_file_meta = new YTAudioFileMeta(info);
         let file_type = '.m4a';
-        let file_name = info.title.replace(/[^a-z0-9()]/gi, '_').toLowerCase() + file_type;
-        // console.log(file_name);
+        // Remove unneeded characters and replace with underscores for readability and make it file friendly.
+        let file_name = info.title.replace(/[^a-z0-9()]/gi, '_').toLowerCase() + file_type; // music_name.m4a
         let write_stream = fs.createWriteStream(file_name);
-        // console.log(write_stream);
-        // write_stream.write = function(chunk, enc, next) {
-        //     console.dir(chunk);
-        //     next;
-        // };
-
         let audio = ytdl('https://www.youtube.com/watch?v=RyoMQg3d5cs', { quality: '140' })
         audio.pipe(write_stream);
         audio.on('response', function (res) {
             let dataRead = 0;
             let totalSize = parseInt(res.headers['content-length']);
             let options = {
-                complete: '\u001b[42m \u001b[0m',
-                incomplete: '\u001b[41m \u001b[0m',
+                complete: '\u001b[42m \u001b[0m', // Green.
+                incomplete: '\u001b[41m \u001b[0m', // Red.
                 width: 20,
                 total: totalSize
             }
@@ -67,45 +61,6 @@ function main() {
                 let chunk = data.length;
                 bar.tick(chunk)
             })
-            // res.on('end', function () {
-            //     process.stdout.write('\n');
-            // });
-        });
-    })
-
-    ytdl.getInfo('https://www.youtube.com/watch?v=8pugCghACV0', function (err, info) {
-        let audio_file_meta = new YTAudioFileMeta(info);
-        let file_type = '.m4a';
-        let file_name = info.title.replace(/[^a-z0-9()]/gi, '_').toLowerCase() + file_type;
-        // console.log(file_name);
-        let write_stream = fs.createWriteStream(file_name);
-        // console.log(write_stream);
-        // write_stream.write = function(chunk, enc, next) {
-        //     console.dir(chunk);
-        //     next;
-        // };
-
-        let audio = ytdl('https://www.youtube.com/watch?v=8pugCghACV0', { quality: '140' })
-        audio.pipe(write_stream);
-        audio.on('response', function (res) {
-            let dataRead = 0;
-            let totalSize = parseInt(res.headers['content-length']);
-            let options = {
-                complete: '\u001b[42m \u001b[0m',
-                incomplete: '\u001b[41m \u001b[0m',
-                width: 20,
-                total: totalSize
-            }
-            //Example download youtube audio and save as .m4a with a progressbar.
-            let bar = new ProgressBar(` downloading [:bar] :percent :etas :current/:total - ${file_name}`, options);
-
-            res.on('data', function (data) {
-                let chunk = data.length;
-                bar.tick(chunk)
-            })
-            // res.on('end', function () {
-            //     process.stdout.write('\n');
-            // });
         });
     })
 
