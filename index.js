@@ -23,7 +23,7 @@ function main() {
         .option('-d, --url [url]', 'Specify youtube link to download.')
         .option('-b, --batch [file]', 'Specify a batch text file of youtube urls (LR separated) and download them all')
         .option('-i, --info [url]', 'Get list of quality options for that youtube content')
-        .option('-bi --batch_info [file]', 'Specify a batch text file and get audio quality info of all youtube urls')
+        .option('-I, --batch_info [file]', 'Specify a batch text file and get audio quality info of all youtube urls')
         .option('-q, --quality [id]', "Specify quality of audio (Default is 140).\n\n        More info: https://en.wikipedia.org/wiki/YouTube#Quality_and_formats\n        [id]\n        140\t M4A  AAC  128'bps\n        141\t M4A  AAC  256'bps (No longer available.)\n        ", '140')
         .parse(process.argv);
     // Check if url is a valid youtube link.

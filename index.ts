@@ -37,7 +37,7 @@ function main() {
         .option('-d, --url [url]', 'Specify youtube link to download.')
         .option('-b, --batch [file]', 'Specify a batch text file of youtube urls (LR separated) and download them all')
         .option('-i, --info [url]', 'Get list of quality options for that youtube content')
-        .option('-bi --batch_info [file]', 'Specify a batch text file and get audio quality info of all youtube urls')
+        .option('-I, --batch_info [file]', 'Specify a batch text file and get audio quality info of all youtube urls')
         .option('-q, --quality [id]',
         `Specify quality of audio (Default is 140).
 
