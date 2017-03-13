@@ -6,3 +6,5 @@ batch.txt
 index.pastebin.ts
 *.m4a
 index.js
+.vscode/
+index.js
