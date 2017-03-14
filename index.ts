@@ -35,21 +35,21 @@ function main() {
             audl -d https://www.youtube.com/watch?v=9bZkp7q19f0
             audl -i https://www.youtube.com/watch?v=9bZkp7q19f0
             audl -b batch.txt
-            audl -I batch.txt
-            audl -q https://www.youtube.com/watch?v=9bZkp7q19f0 -q 141`
+            audl -I batch.txt`
         )
         .option('-d, --url [url]', 'Specify youtube link to download.')
         .option('-b, --batch [file]', 'Specify a batch text file of youtube urls (LR separated) and download them all')
         .option('-i, --info [url]', 'Get list of quality options for that youtube content')
         .option('-I, --batch_info [file]', 'Specify a batch text file and get audio quality info of all youtube urls')
-        .option('-q, --quality [id]',
-        `Specify quality and download youtube audio content. (Default is 140).
+        /* Implement option -q --quality later */
+        // .option('-q, --quality [id]',
+        // `Specify quality and download youtube audio content. (Default is 140).
 
-        More info: https://en.wikipedia.org/wiki/YouTube#Quality_and_formats
-        [id]
-        140	 M4A  AAC  128'bps
-        141	 M4A  AAC  256'bps (No longer available.)
-        `, '140')
+        // More info: https://en.wikipedia.org/wiki/YouTube#Quality_and_formats
+        // [id]
+        // 140	 M4A  AAC  128'bps
+        // 141	 M4A  AAC  256'bps (No longer available.)
+        // `, '140')
         .parse(process.argv);
 
     // Check if url is a valid youtube link.
@@ -63,7 +63,6 @@ function main() {
         }
 
     }
-
 
     // Download youtube content as audio.
     if (program.url) {
@@ -154,7 +153,7 @@ function main() {
 
         for (let url of youtube_urls) {
             // Remove \r \n from string before validating.
-            url = url.replace(/(\r\n|\n|\r)/gm,"");
+            url = url.replace(/(\r\n|\n|\r)/gm, "");
             if (!valid_youtube_match(url)) {
                 console.log(url + ' is not a valid youtube url.');
                 continue
@@ -190,7 +189,8 @@ function main() {
         Promise.map(getInfo_promises, (info) => {
             // Do only one request at a time using concurrency.
         }, { concurrency: 1 }).then(function () {
-            console.log(itag_info);
+            console.log();
+            console.table(itag_info);
         });
         return;
     }
@@ -204,7 +204,7 @@ function main() {
 
         for (let url of youtube_urls) {
             // Remove \r \n from string before validating.
-            url = url.replace(/(\r\n|\n|\r)/gm,"");
+            url = url.replace(/(\r\n|\n|\r)/gm, "");
             if (!valid_youtube_match(url)) {
                 console.log(url + 'is not a valid youtube url and will not be downloaded.');
                 continue
@@ -225,6 +225,7 @@ function main() {
     // If program was called with no arguments, show help.
     if (program.args.length === 0) program.help();
 
+    // Return a promise to get youtube info such as itag, quality, bitrate.
     function getInfo(url) {
         return new Promise(function (resolve, reject) {
             ytdl.getInfo(url, function (err, info) {
@@ -234,6 +235,7 @@ function main() {
         })
     }
 
+    // Return a promise to download youtube audio content.
     function YTdownloadAsAudio(url) {
         return new Promise(function (resolve, reject) {
             ytdl.getInfo(url, function (err, info) {

@@ -23,12 +23,11 @@ main();
 function main() {
     program
         .version('0.2.2')
-        .description("audl - A convenient node command-line app to download youtube audio content such as podcasts and music.\n\n            Examples:\n\n            audl -d https://www.youtube.com/watch?v=9bZkp7q19f0\n            audl -i https://www.youtube.com/watch?v=9bZkp7q19f0\n            audl -b batch.txt\n            audl -I batch.txt\n            audl -q https://www.youtube.com/watch?v=9bZkp7q19f0 -q 141")
+        .description("audl - A convenient node command-line app to download youtube audio content such as podcasts and music.\n\n            Examples:\n\n            audl -d https://www.youtube.com/watch?v=9bZkp7q19f0\n            audl -i https://www.youtube.com/watch?v=9bZkp7q19f0\n            audl -b batch.txt\n            audl -I batch.txt")
         .option('-d, --url [url]', 'Specify youtube link to download.')
         .option('-b, --batch [file]', 'Specify a batch text file of youtube urls (LR separated) and download them all')
         .option('-i, --info [url]', 'Get list of quality options for that youtube content')
         .option('-I, --batch_info [file]', 'Specify a batch text file and get audio quality info of all youtube urls')
-        .option('-q, --quality [id]', "Specify quality and download youtube audio content. (Default is 140).\n\n        More info: https://en.wikipedia.org/wiki/YouTube#Quality_and_formats\n        [id]\n        140\t M4A  AAC  128'bps\n        141\t M4A  AAC  256'bps (No longer available.)\n        ", '140')
         .parse(process.argv);
     // Check if url is a valid youtube link.
     function valid_youtube_match(url) {
@@ -161,7 +160,8 @@ function main() {
         Promise.map(getInfo_promises, function (info) {
             // Do only one request at a time using concurrency.
         }, { concurrency: 1 }).then(function () {
-            console.log(itag_info_1);
+            console.log();
+            console.table(itag_info_1);
         });
         return;
     }
@@ -192,6 +192,7 @@ function main() {
     // If program was called with no arguments, show help.
     if (program.args.length === 0)
         program.help();
+    // Return a promise to get youtube info such as itag, quality, bitrate.
     function getInfo(url) {
         return new Promise(function (resolve, reject) {
             ytdl.getInfo(url, function (err, info) {
@@ -202,6 +203,7 @@ function main() {
             });
         });
     }
+    // Return a promise to download youtube audio content.
     function YTdownloadAsAudio(url) {
         return new Promise(function (resolve, reject) {
             ytdl.getInfo(url, function (err, info) {
