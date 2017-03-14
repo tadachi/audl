@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 import ytdl = require('ytdl-core');
 import jsonfile = require('jsonfile');
 import program = require('commander');
@@ -24,7 +26,7 @@ main();
 // Main routine.
 function main() {
     program
-        .version('0.2.0')
+        .version('0.2.1')
         .description(
         `audl - A convenient node command-line app to download youtube audio content such as podcasts and music.
 
@@ -33,7 +35,7 @@ function main() {
             audl -d https://www.youtube.com/watch?v=9bZkp7q19f0
             audl -i https://www.youtube.com/watch?v=9bZkp7q19f0
             audl -b batch.txt
-            audl -bi batch.txt
+            audl -I batch.txt
             audl -q https://www.youtube.com/watch?v=9bZkp7q19f0 -q 141`
         )
         .option('-d, --url [url]', 'Specify youtube link to download.')
@@ -41,7 +43,7 @@ function main() {
         .option('-i, --info [url]', 'Get list of quality options for that youtube content')
         .option('-I, --batch_info [file]', 'Specify a batch text file and get audio quality info of all youtube urls')
         .option('-q, --quality [id]',
-        `Specify quality of audio (Default is 140).
+        `Specify quality and download youtube audio content. (Default is 140).
 
         More info: https://en.wikipedia.org/wiki/YouTube#Quality_and_formats
         [id]
@@ -51,6 +53,7 @@ function main() {
         .parse(process.argv);
 
     // Check if url is a valid youtube link.
+
 
     // Download youtube content as audio.
     if (program.url) {
@@ -185,6 +188,9 @@ function main() {
         return;
     }
 
+    // If program was called with no arguments, show help.
+    if (program.args.length === 0) program.help();
+
     function getInfo(url) {
         return new Promise(function (resolve, reject) {
             ytdl.getInfo(url, function (err, info) {
@@ -232,6 +238,8 @@ function main() {
         });
 
     }
+
+
 }
 
 interface AudioFileFormatsInterface {
