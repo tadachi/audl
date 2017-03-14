@@ -8,12 +8,14 @@ import Promise = require('bluebird');
 require('console.table');
 
 /*
+ * Takumi Adachi
  * 02/01/2017
+ *
+ * MIT License
  * 
- * https://en.wikipedia.org/wiki/YouTube#Quality_and_formats
- * itag container encoding bitrate
- * 140	M4A	AAC	128
- * 141	M4A	AAC	256
+ * Node application to quickly and conveniently download adequate quality music, podcasts or audio from Youtube.
+ * 
+ * Has options for batch and checking bitrate of youtube audio.
  */
 
 // Run main routine,
@@ -22,7 +24,7 @@ main();
 // Main routine.
 function main() {
     program
-        .version('0.1.0')
+        .version('0.2.0')
         .description(
         `audl - A convenient node command-line app to download youtube audio content such as podcasts and music.
 

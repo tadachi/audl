@@ -1,14 +1,11 @@
 {
   "name": "audl",
-  "version": "0.0.1",
+  "version": "0.2.0",
   "description": "",
   "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
   "keywords": [],
   "author": "tadachi",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
     "bluebird": "^3.5.0",
     "commander": "^2.9.0",
