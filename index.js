@@ -22,7 +22,7 @@ main();
 // Main routine.
 function main() {
     program
-        .version('0.2.1')
+        .version('0.2.2')
         .description("audl - A convenient node command-line app to download youtube audio content such as podcasts and music.\n\n            Examples:\n\n            audl -d https://www.youtube.com/watch?v=9bZkp7q19f0\n            audl -i https://www.youtube.com/watch?v=9bZkp7q19f0\n            audl -b batch.txt\n            audl -I batch.txt\n            audl -q https://www.youtube.com/watch?v=9bZkp7q19f0 -q 141")
         .option('-d, --url [url]', 'Specify youtube link to download.')
         .option('-b, --batch [file]', 'Specify a batch text file of youtube urls (LR separated) and download them all')
