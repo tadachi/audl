@@ -31,9 +31,23 @@ function main() {
         .option('-q, --quality [id]', "Specify quality and download youtube audio content. (Default is 140).\n\n        More info: https://en.wikipedia.org/wiki/YouTube#Quality_and_formats\n        [id]\n        140\t M4A  AAC  128'bps\n        141\t M4A  AAC  256'bps (No longer available.)\n        ", '140')
         .parse(process.argv);
     // Check if url is a valid youtube link.
+    function valid_youtube_match(url) {
+        var youtube_valid_regexp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=|\?v=)([^#\&\?]*).*/;
+        var match = url.match(youtube_valid_regexp);
+        if (match && match[2].length == 11) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
     // Download youtube content as audio.
     if (program.url) {
         var url_1 = program.url;
+        if (!valid_youtube_match(url_1)) {
+            console.log(program.url + 'is not a valid youtube url.');
+            return;
+        }
         var quality = program.quality;
         // Example get meta data of youtube video.
         ytdl.getInfo(url_1, function (err, info) {
@@ -70,6 +84,11 @@ function main() {
     // Get itag info and output to console.
     if (program.info) {
         var url = program.info;
+        // Check if valid url.
+        if (!valid_youtube_match(url)) {
+            console.log(url + 'is not a valid youtube url.');
+            return;
+        }
         ytdl.getInfo(url, function (err, info) {
             var audio_file_meta = new YTAudioFileMeta(info);
             var title = info.title.replace(/[^a-z]+/gi, '_').toLowerCase(); // music_title.
@@ -100,10 +119,16 @@ function main() {
     // Get Itag info for a batch of youtube urls.
     if (program.batch_info) {
         // Example: Read from a file of youtube links separated by linefeeds.
-        var youtube_urls = fs.readFileSync('batch.txt').toString().split("\n");
+        var youtube_urls = fs.readFileSync('batch.txt').toString().split("\r");
         var getInfo_promises = [];
         var itag_info_1 = [];
         var _loop_1 = function (url) {
+            // Remove \r \n from string before validating.
+            url = url.replace(/(\r\n|\n|\r)/gm, "");
+            if (!valid_youtube_match(url)) {
+                console.log(url + ' is not a valid youtube url.');
+                return "continue";
+            }
             var promise = getInfo(url).then(function (info) {
                 var audio_file_meta = new YTAudioFileMeta(info);
                 var title = info.title.replace(/[^a-z]+/gi, '_').toLowerCase(); // music_title.
@@ -148,7 +173,14 @@ function main() {
         var itag_info = [];
         for (var _a = 0, youtube_urls_2 = youtube_urls; _a < youtube_urls_2.length; _a++) {
             var url = youtube_urls_2[_a];
+            // Remove \r \n from string before validating.
+            url = url.replace(/(\r\n|\n|\r)/gm, "");
+            if (!valid_youtube_match(url)) {
+                console.log(url + 'is not a valid youtube url and will not be downloaded.');
+                continue;
+            }
             var promise = YTdownloadAsAudio(url);
+            // Check if valid url. 
             download_promises.push(promise);
         }
         Promise.map(download_promises, function (result) {
