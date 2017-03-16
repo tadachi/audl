@@ -7,6 +7,8 @@ Quickly and conveniently download music, podcasts or audio from Youtube.
 
 Has options for batch and checking bitrate of youtube audio.
 
+Special thanks to https://github.com/fent/node-ytdl for his work.
+
 #### Install
 
 ```bash
@@ -69,6 +71,17 @@ the_epic_final_fantasy_v_medley       140   aac       128      https://www.youtu
     -b, --batch [file]       Specify a batch text file of youtube urls (LR separated) and download them al
     -i, --info [url]         Get list of quality options for that youtube content
     -I, --batch_info [file]  Specify a batch text file and get audio quality info of all youtube urls
+```
+
+#### tests
+
+To manually test, run these commands.
+
+```
+  npm run test_download
+  npm run test_getinfo
+  npm run test_batch
+  npm run test_batch_getinfo
 ```
 
 #### License

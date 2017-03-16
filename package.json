@@ -14,15 +14,27 @@
     "bluebird": "^3.5.0",
     "commander": "^2.9.0",
     "console.table": "^0.8.0",
-    "https": "^1.0.0",
     "jsonfile": "^2.4.0",
     "progress": "^1.1.8",
-    "prompt": "^1.0.0",
-    "request": "^2.79.0",
     "ytdl-core": "^0.7.24"
   },
   "devDependencies": {
     "@types/node": "^7.0.5",
     "fs": "0.0.1-security"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tadachi/audl.git"
+  },
+  "homepage": {
+    "url": "https://github.com/tadachi/audl"
+  },
+  "scripts": {
+    "test_download": "node index.js -d https://www.youtube.com/watch?v=RyoMQg3d5cs",
+    "test_getinfo": "node index.js -i https://www.youtube.com/watch?v=RyoMQg3d5cs",
+    "test_batch": "node index.js -b ./tests/batch.txt",
+    "test_batch_getinfo": "node index.js -I ./tests/batch.txt",
+    "clean-wins": "del *.m4a",
+    "clean-unix": "rm *.m4a"
   }
 }

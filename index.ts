@@ -26,7 +26,7 @@ main();
 // Main routine.
 function main() {
     program
-        .version('0.2.2')
+        .version('0.2.3')
         .description(
         `audl - A convenient node command-line app to download youtube audio content such as podcasts and music.
 
@@ -123,7 +123,7 @@ function main() {
     // Get Itag info for a batch of youtube urls.
     if (program.batch_info) {
         // Example: Read from a file of youtube links separated by linefeeds.
-        var youtube_urls = fs.readFileSync('batch.txt').toString().split("\r");
+        var youtube_urls = fs.readFileSync(program.batch_info).toString().split("\r");
         let getInfo_promises = [];
         let itag_info = [];
 
@@ -170,14 +170,14 @@ function main() {
         }).error((err) => {
             console.log(err);
         });;
-        
+
         return;
     }
 
     // Download a batch of youtube urls in audio format.
     if (program.batch) {
         // Example: Read from a file of youtube links separated by linefeeds.
-        var youtube_urls = fs.readFileSync('batch.txt').toString().split("\n");
+        var youtube_urls = fs.readFileSync(program.batch).toString().split("\n");
         let download_promises = [];
         let itag_info = [];
 

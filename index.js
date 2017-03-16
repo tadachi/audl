@@ -22,7 +22,7 @@ main();
 // Main routine.
 function main() {
     program
-        .version('0.2.2')
+        .version('0.2.3')
         .description("audl - A convenient node command-line app to download youtube audio content such as podcasts and music.\n\n            Examples:\n\n            audl -d https://www.youtube.com/watch?v=9bZkp7q19f0\n            audl -i https://www.youtube.com/watch?v=9bZkp7q19f0\n            audl -b batch.txt\n            audl -I batch.txt")
         .option('-d, --url [url]', 'Specify youtube link to download.')
         .option('-b, --batch [file]', 'Specify a batch text file of youtube urls (LR separated) and download them all')
@@ -93,7 +93,7 @@ function main() {
     // Get Itag info for a batch of youtube urls.
     if (program.batch_info) {
         // Example: Read from a file of youtube links separated by linefeeds.
-        var youtube_urls = fs.readFileSync('batch.txt').toString().split("\r");
+        var youtube_urls = fs.readFileSync(program.batch_info).toString().split("\r");
         var getInfo_promises = [];
         var itag_info_1 = [];
         var _loop_1 = function (url) {
@@ -146,7 +146,7 @@ function main() {
     // Download a batch of youtube urls in audio format.
     if (program.batch) {
         // Example: Read from a file of youtube links separated by linefeeds.
-        var youtube_urls = fs.readFileSync('batch.txt').toString().split("\n");
+        var youtube_urls = fs.readFileSync(program.batch).toString().split("\n");
         var download_promises = [];
         var itag_info = [];
         for (var _a = 0, youtube_urls_2 = youtube_urls; _a < youtube_urls_2.length; _a++) {
