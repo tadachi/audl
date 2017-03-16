@@ -26,7 +26,7 @@ main();
 // Main routine.
 function main() {
     program
-        .version('0.2.3')
+        .version('0.2.4')
         .description(
         `audl - A convenient node command-line app to download youtube audio content such as podcasts and music.
 
