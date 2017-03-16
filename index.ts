@@ -71,37 +71,10 @@ function main() {
             console.log(program.url + 'is not a valid youtube url.');
             return
         }
-        let quality = program.quality;
-        // Example get meta data of youtube video.
-        ytdl.getInfo(url, (err, info) => {
-            let audio_file_meta = new YTAudioFileMeta(info);
-            let file_type = '.m4a';
-            // Remove unneeded characters and replace with underscores for readability and make it file friendly.
-            let file_name = audio_file_meta.title.replace(/[^a-z]+/gi, '_').toLowerCase() + file_type; // music_title.m4a
-            let write_stream = fs.createWriteStream(file_name);
-            let audio = ytdl(url, { quality: 140 })
-            audio.pipe(write_stream);
-            audio.on('response', (res) => {
-                let dataRead = 0;
-                let totalSize = parseInt(res.headers['content-length']);
-                let options = {
-                    complete: '\u001b[42m \u001b[0m', // Green.
-                    incomplete: '\u001b[41m \u001b[0m', // Red.
-                    width: 20,
-                    total: totalSize
-                }
-                //Example download youtube audio and save as .m4a with a progressbar.
-                let bar = new ProgressBar(` downloading [:bar] :percent :etas :current/:total - ${file_name}`, options);
 
-                res.on('data', (data) => {
-                    let chunk = data.length;
-                    bar.tick(chunk)
-                })
-            });
-            audio.on('finish', () => {
-            })
-            audio.on('error', () => {
-            });
+        YTdownloadAsAudio(url).then((result) => {
+        }).error((err) => {
+            console.log(err);
         })
 
         return;
@@ -115,7 +88,8 @@ function main() {
             console.log(url + 'is not a valid youtube url.');
             return
         }
-        ytdl.getInfo(url, (err, info) => {
+
+        getInfo(url).then((info) => {
             let audio_file_meta = new YTAudioFileMeta(info);
             let title = info.title.replace(/[^a-z]+/gi, '_').toLowerCase(); // music_title.
             let formats = audio_file_meta.formats;
@@ -137,9 +111,11 @@ function main() {
                 if (itag === '141') push(itag)
             }
 
-            console.log();
+            console.log()
             console.table(itag_info);
-        })
+        }).error((err) => {
+            console.log(err);
+        });
 
         return;
     }
@@ -191,7 +167,10 @@ function main() {
         }, { concurrency: 1 }).then(function () {
             console.log();
             console.table(itag_info);
-        });
+        }).error((err) => {
+            console.log(err);
+        });;
+        
         return;
     }
 
@@ -205,12 +184,12 @@ function main() {
         for (let url of youtube_urls) {
             // Remove \r \n from string before validating.
             url = url.replace(/(\r\n|\n|\r)/gm, "");
+            // Check if valid youtube url.
             if (!valid_youtube_match(url)) {
                 console.log(url + 'is not a valid youtube url and will not be downloaded.');
                 continue
             }
             let promise = YTdownloadAsAudio(url);
-            // Check if valid url. 
 
             download_promises.push(promise);
         }
@@ -218,7 +197,11 @@ function main() {
         Promise.map(download_promises, (result) => {
             // Do only one request at a time using concurrency.
         }, { concurrency: 1 }).then(function (result) {
+
+        }).error((err) => {
+            console.log(err);
         });
+
         return;
     }
 

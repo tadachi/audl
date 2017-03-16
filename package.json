@@ -1,6 +1,6 @@
 {
   "name": "audl",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "description": "Download music, audio, podcasts from youtube.",
   "main": "index.js",
   "keywords": [],

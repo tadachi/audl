@@ -42,41 +42,14 @@ function main() {
     }
     // Download youtube content as audio.
     if (program.url) {
-        var url_1 = program.url;
-        if (!valid_youtube_match(url_1)) {
+        var url = program.url;
+        if (!valid_youtube_match(url)) {
             console.log(program.url + 'is not a valid youtube url.');
             return;
         }
-        var quality = program.quality;
-        // Example get meta data of youtube video.
-        ytdl.getInfo(url_1, function (err, info) {
-            var audio_file_meta = new YTAudioFileMeta(info);
-            var file_type = '.m4a';
-            // Remove unneeded characters and replace with underscores for readability and make it file friendly.
-            var file_name = audio_file_meta.title.replace(/[^a-z]+/gi, '_').toLowerCase() + file_type; // music_title.m4a
-            var write_stream = fs.createWriteStream(file_name);
-            var audio = ytdl(url_1, { quality: 140 });
-            audio.pipe(write_stream);
-            audio.on('response', function (res) {
-                var dataRead = 0;
-                var totalSize = parseInt(res.headers['content-length']);
-                var options = {
-                    complete: '\u001b[42m \u001b[0m',
-                    incomplete: '\u001b[41m \u001b[0m',
-                    width: 20,
-                    total: totalSize
-                };
-                //Example download youtube audio and save as .m4a with a progressbar.
-                var bar = new ProgressBar(" downloading [:bar] :percent :etas :current/:total - " + file_name, options);
-                res.on('data', function (data) {
-                    var chunk = data.length;
-                    bar.tick(chunk);
-                });
-            });
-            audio.on('finish', function () {
-            });
-            audio.on('error', function () {
-            });
+        YTdownloadAsAudio(url).then(function (result) {
+        }).error(function (err) {
+            console.log(err);
         });
         return;
     }
@@ -88,7 +61,7 @@ function main() {
             console.log(url + 'is not a valid youtube url.');
             return;
         }
-        ytdl.getInfo(url, function (err, info) {
+        getInfo(url).then(function (info) {
             var audio_file_meta = new YTAudioFileMeta(info);
             var title = info.title.replace(/[^a-z]+/gi, '_').toLowerCase(); // music_title.
             var formats = audio_file_meta.formats;
@@ -112,6 +85,8 @@ function main() {
             }
             console.log();
             console.table(itag_info);
+        }).error(function (err) {
+            console.log(err);
         });
         return;
     }
@@ -162,7 +137,10 @@ function main() {
         }, { concurrency: 1 }).then(function () {
             console.log();
             console.table(itag_info_1);
+        }).error(function (err) {
+            console.log(err);
         });
+        ;
         return;
     }
     // Download a batch of youtube urls in audio format.
@@ -175,17 +153,19 @@ function main() {
             var url = youtube_urls_2[_a];
             // Remove \r \n from string before validating.
             url = url.replace(/(\r\n|\n|\r)/gm, "");
+            // Check if valid youtube url.
             if (!valid_youtube_match(url)) {
                 console.log(url + 'is not a valid youtube url and will not be downloaded.');
                 continue;
             }
             var promise = YTdownloadAsAudio(url);
-            // Check if valid url. 
             download_promises.push(promise);
         }
         Promise.map(download_promises, function (result) {
             // Do only one request at a time using concurrency.
         }, { concurrency: 1 }).then(function (result) {
+        }).error(function (err) {
+            console.log(err);
         });
         return;
     }
