@@ -20,7 +20,8 @@
   },
   "devDependencies": {
     "@types/node": "^7.0.5",
-    "fs": "0.0.1-security"
+    "fs": "0.0.1-security",
+    "typescript": "^2.2.1"
   },
   "repository": {
     "type": "git",
