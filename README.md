@@ -73,7 +73,11 @@ the_epic_final_fantasy_v_medley       140   aac       128      https://www.youtu
     -I, --batch_info [file]  Specify a batch text file and get audio quality info of all youtube urls
 ```
 
-#### tests
+###### Batch Files
+
+See [this](https://github.com/tadachi/audl/blob/master/tests/batch.txt) for an example of a proper batch file for audl.
+
+##### Tests
 
 To manually test, run these commands.
 
@@ -84,7 +88,7 @@ To manually test, run these commands.
   npm run test_batch_getinfo
 ```
 
-#### License
+##### License
 
 MIT License
  

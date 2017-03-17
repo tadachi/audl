@@ -71,7 +71,8 @@ function main() {
             console.log(program.url + 'is not a valid youtube url.');
             return
         }
-
+        
+        console.log();
         YTdownloadAsAudio(url).then((result) => {
         }).error((err) => {
             console.log(err);

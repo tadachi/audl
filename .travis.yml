@@ -8,5 +8,5 @@ before install:
 - npm install -g typescript
 
 script:
-- npm build
-- npm test_download
+- npm run build
+- npm run test_download
