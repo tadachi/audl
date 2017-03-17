@@ -1,13 +1,14 @@
 audl
 =========
+[![Travis](https://travis-ci.org/tadachi/audl.svg?branch=master?style=flat-square)](https://travis-ci.org/tadachi/audl)
 
 #### Description
 
 Quickly and conveniently download music, podcasts or audio from Youtube.
 
-Has options for batch and checking bitrate of youtube audio.
+Has options for batch and checking bitrate of Youtube audio.
 
-Special thanks to https://github.com/fent/node-ytdl for his work.
+Special thanks to [fent](https://github.com/fent/node-ytdl). His work is a core part of audl.
 
 #### Install
 
@@ -76,6 +77,8 @@ the_epic_final_fantasy_v_medley       140   aac       128      https://www.youtu
 ###### Batch Files
 
 See [this](https://github.com/tadachi/audl/blob/master/tests/batch.txt) for an example of a proper batch file for audl.
+
+Each URL is line-feed separated.
 
 ##### Tests
 
