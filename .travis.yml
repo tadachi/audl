@@ -1,0 +1,11 @@
+language: node_js
+
+node_js:
+- stable
+
+before install:
+- npm install
+
+script:
+- npm build
+- npm test_download
