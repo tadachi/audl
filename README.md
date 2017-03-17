@@ -23,6 +23,10 @@ audl -d https://www.youtube.com/watch?v=9bZkp7q19f0
 downloading [                    ] 100% 0.0s 4007494/4007494 - psy_gangnam_style_m_v.m4a
 ```
 ##### Batch download
+ 
+Have a line break separated text file of youtube urls and download them.
+
+
 ```
 audl -b batch.txt
 

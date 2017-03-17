@@ -30,6 +30,7 @@
     "url": "https://github.com/tadachi/audl"
   },
   "scripts": {
+    "build": "tsc index.ts",
     "test_download": "node index.js -d https://www.youtube.com/watch?v=RyoMQg3d5cs",
     "test_getinfo": "node index.js -i https://www.youtube.com/watch?v=RyoMQg3d5cs",
     "test_batch": "node index.js -b ./tests/batch.txt",
