@@ -9,4 +9,4 @@ before install:
 
 script:
 - npm run build
-- npm run test_download
+- npm run test_getinfo
