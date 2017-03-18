@@ -14,7 +14,6 @@
     "bluebird": "^3.5.0",
     "commander": "^2.9.0",
     "console.table": "^0.8.0",
-    "jsonfile": "^2.4.0",
     "progress": "^1.1.8",
     "ytdl-core": "^0.7.24"
   },

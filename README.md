@@ -1,6 +1,6 @@
 audl
 =========
-[![Travis](https://travis-ci.org/tadachi/audl.svg?branch=master?style=flat-square)](https://travis-ci.org/tadachi/audl)
+[![Build Status](https://travis-ci.org/tadachi/audl.svg?branch=master)](https://travis-ci.org/tadachi/audl)
 
 #### Description
 

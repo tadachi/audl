@@ -1,11 +1,9 @@
 #!/usr/bin/env node
 
 import ytdl = require('ytdl-core');
-import jsonfile = require('jsonfile');
 import program = require('commander');
 import fs = require('fs');
 import ProgressBar = require('progress');
-import https = require('https');
 import Promise = require('bluebird');
 require('console.table');
 
@@ -37,7 +35,7 @@ function main() {
             audl -b batch.txt
             audl -I batch.txt`
         )
-        .option('-d, --url [url]', 'Specify youtube link to download.')
+        .option('-d, --url [url]', 'Specify youtube link to download')
         .option('-b, --batch [file]', 'Specify a batch text file of youtube urls (LR separated) and download them all')
         .option('-i, --info [url]', 'Get list of quality options for that youtube content')
         .option('-I, --batch_info [file]', 'Specify a batch text file and get audio quality info of all youtube urls')
